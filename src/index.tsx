@@ -1,9 +1,15 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import * as React from "react"
+import * as ReactDOM from "react-dom"
+import { Provider } from "react-redux"
 
-import { Hello } from "./components/Hello";
+import { store } from "./store/store"
+import TodoList from "./components/TodoList"
 
 ReactDOM.render(
-    <Hello compiler="TypeScript" framework="React" />,
+    <Provider store={store}>
+        <div>
+            <TodoList name="My First List"/>
+        </div>
+    </Provider>,
     document.getElementById("example")
 );
