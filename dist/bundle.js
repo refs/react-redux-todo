@@ -1471,8 +1471,10 @@ const ReactDOM = __webpack_require__(22);
 const react_redux_1 = __webpack_require__(3);
 const store_1 = __webpack_require__(52);
 const TodoList_1 = __webpack_require__(56);
+const TopLayer_1 = __webpack_require__(61);
 ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store_1.store },
     React.createElement("div", null,
+        React.createElement(TopLayer_1.default, null),
         React.createElement(TodoList_1.default, { name: "My First List" }))), document.getElementById("example"));
 
 
@@ -20846,6 +20848,46 @@ exports.clearCompletedTasks = () => {
         type: "CLEAR_COMPLETED_TASKS"
     };
 };
+
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const React = __webpack_require__(1);
+const withLinks_1 = __webpack_require__(63);
+class TopLayer extends React.Component {
+    render() {
+        return (React.createElement("div", null, "-70D0 H34D3R-"));
+    }
+}
+exports.default = withLinks_1.default(TopLayer);
+
+
+/***/ }),
+/* 62 */,
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const React = __webpack_require__(1);
+// Higher Order Component 
+const withLinks = (WrappedComponent) => {
+    return class ProxyProps extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        render() {
+            return React.createElement(WrappedComponent, Object.assign({}, this.props));
+        }
+    };
+};
+exports.default = withLinks;
 
 
 /***/ })
