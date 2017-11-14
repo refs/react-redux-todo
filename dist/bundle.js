@@ -3591,11 +3591,16 @@ const todoListReducers = (state = { todoList: initialTodos }, action) => {
             });
             return _ret;
         case "COMPLETE_TASK":
-            let newState = [...state];
-            let toReturn = lodash_1.filter(newState, todo => {
-                return todo.text !== action.payload;
+            let tasks_to_complete = [...state];
+            tasks_to_complete.map(todo => {
+                if (todo.text === action.payload) {
+                    todo.completed = true;
+                }
             });
-            return toReturn;
+            return tasks_to_complete;
+        case "CLEAR_COMPLETED_TASKS":
+            let filtered_completed = lodash_1.filter([...state], (todo) => { return todo.completed === false; });
+            return filtered_completed;
         default:
             return state.todoList;
     }
@@ -20707,6 +20712,7 @@ const redux_1 = __webpack_require__(2);
 const react_redux_1 = __webpack_require__(3);
 const Todo_1 = __webpack_require__(57);
 const addTodo_1 = __webpack_require__(59);
+const clearCompletedTasks_1 = __webpack_require__(60);
 // ARCHITECTURE NOTE
 // Since this is not a 'dumb component' as it reacts to Redux state, this ideally should
 // be within a folder `/containers` instead of `/components`
@@ -20728,7 +20734,9 @@ class TodoList extends React.Component {
             React.createElement("button", { onClick: () => 
                 // Note we have access here to `addTodo()` as we BOUND the actionCreator
                 // a few lines below to the component properties
-                this.props.addTodo(document.getElementById("todoTextInput").value) }, "Add")));
+                this.props.addTodo(document.getElementById("todoTextInput").value) }, "Add"),
+            React.createElement("br", null),
+            React.createElement("input", { type: 'button', value: 'clear completed', onClick: () => this.props.clearCompletedTasks() })));
     }
 }
 const mapStateToProps = (state) => {
@@ -20737,7 +20745,7 @@ const mapStateToProps = (state) => {
     };
 };
 const mapDispatchToProps = (dispatch) => {
-    return redux_1.bindActionCreators({ addTodo: addTodo_1.addTodo }, dispatch);
+    return redux_1.bindActionCreators({ addTodo: addTodo_1.addTodo, clearCompletedTasks: clearCompletedTasks_1.clearCompletedTasks }, dispatch);
 };
 exports.default = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(TodoList);
 
@@ -20753,6 +20761,12 @@ const React = __webpack_require__(1);
 const redux_1 = __webpack_require__(2);
 const react_redux_1 = __webpack_require__(3);
 const completeTask_1 = __webpack_require__(58);
+const strikeThroughSpanStyle = {
+    textDecoration: 'line-through'
+};
+const pendingTodoStyle = {
+    textDecoration: 'none'
+};
 class Todo extends React.Component {
     constructor(props) {
         super(props);
@@ -20763,10 +20777,8 @@ class Todo extends React.Component {
     }
     render() {
         return (React.createElement("li", null,
-            this.props.text,
-            " - ",
-            this.props.completed ? "done" : "pending",
-            React.createElement("button", { onClick: () => this.handleComplete() }, "remove")));
+            React.createElement("span", { style: this.props.completed ? strikeThroughSpanStyle : pendingTodoStyle }, this.props.text),
+            React.createElement("button", { onClick: () => this.handleComplete() }, "complete")));
     }
 }
 // mapTodoStateToProps maps the store state to this.props. It basically
@@ -20818,6 +20830,20 @@ exports.addTodo = (text) => {
     return {
         type: "ADD_TODO",
         payload: text
+    };
+};
+
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.clearCompletedTasks = () => {
+    return {
+        type: "CLEAR_COMPLETED_TASKS"
     };
 };
 

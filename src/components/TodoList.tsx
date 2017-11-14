@@ -1,17 +1,18 @@
-import * as React from "react"
-import { bindActionCreators } from "redux"
-import { connect, createProvider } from "react-redux"
+import * as React from "react";
+import { bindActionCreators } from "redux";
+import { connect, createProvider } from "react-redux";
 
-import Todo from "./Todo"
-import { TodoProps } from "./Todo"
-import { store } from "../store/store"
-import { addTodo } from "../actions/addTodo"
-import { completeTask } from "../actions/completeTask"
+import Todo from "./Todo";
+import { TodoProps } from "./Todo";
+import { store } from "../store/store";
+import { addTodo } from "../actions/addTodo";
+import { completeTask } from "../actions/completeTask";
+import { clearCompletedTasks } from "../actions/clearCompletedTasks";
 
 export interface TodoListProps {
-  name: string
-  todoList?: Array<TodoProps>
-  addTodo: any
+  name: string;
+  todoList?: Array<TodoProps>;
+  addTodo: any;
 }
 
 // ARCHITECTURE NOTE
@@ -19,15 +20,15 @@ export interface TodoListProps {
 // be within a folder `/containers` instead of `/components`
 class TodoList extends React.Component<TodoListProps, {}> {
   constructor(props: TodoListProps) {
-    super(props)
+    super(props);
   }
 
   fillTodos() {
-    let _ret: any = []
+    let _ret: any = [];
     this.props.todoList.map((el: any) =>
       _ret.push(<Todo key={el.text} text={el.text} completed={el.completed} />)
-    )
-    return _ret
+    );
+    return _ret;
   }
 
   render() {
@@ -48,19 +49,21 @@ class TodoList extends React.Component<TodoListProps, {}> {
         >
           Add
         </button>
+        <br />
+        <input type='button' value='clear completed' onClick={() => this.props.clearCompletedTasks()}/>
       </div>
-    )
+    );
   }
 }
 
 const mapStateToProps = (state: any) => {
   return {
     todoList: state.todoList
-  }
-}
+  };
+};
 
 const mapDispatchToProps = (dispatch: any) => {
-  return bindActionCreators({ addTodo }, dispatch)
-}
+  return bindActionCreators({ addTodo, clearCompletedTasks }, dispatch);
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

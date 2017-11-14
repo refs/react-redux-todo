@@ -6,9 +6,17 @@ import { store } from "../store/store";
 import { completeTask } from "../actions/completeTask";
 
 export interface TodoProps {
-  text: string;
-  completed: boolean;
-  completeTask: any;
+  text: string
+  completed: boolean
+  completeTask: any
+}
+
+const strikeThroughSpanStyle = {
+  textDecoration: 'line-through'
+}
+
+const pendingTodoStyle = {
+  textDecoration: 'none'
 }
 
 class Todo extends React.Component<TodoProps, {}> {
@@ -24,8 +32,10 @@ class Todo extends React.Component<TodoProps, {}> {
   render() {
     return (
       <li>
-        {this.props.text} - {this.props.completed ? "done" : "pending"}
-        <button onClick={() => this.handleComplete()}>remove</button>
+        <span style={this.props.completed ? strikeThroughSpanStyle : pendingTodoStyle }>
+          {this.props.text}
+        </span>
+        <button onClick={() => this.handleComplete()}>complete</button>
       </li>
     );
   }

@@ -28,11 +28,16 @@ const todoListReducers = (state = { todoList: initialTodos }, action: any) => {
       });
       return _ret;
     case "COMPLETE_TASK":
-      let newState = [...state];
-      let toReturn = filter(newState, todo => {
-        return todo.text !== action.payload;
-      });
-      return toReturn;
+      let tasks_to_complete = [...state]
+      tasks_to_complete.map(todo => {
+        if (todo.text === action.payload) {
+          todo.completed = true
+        }
+      })
+      return tasks_to_complete
+    case "CLEAR_COMPLETED_TASKS":
+      let filtered_completed = filter([...state], (todo) => {return todo.completed === false})
+      return filtered_completed
     default:
       return state.todoList;
   }
