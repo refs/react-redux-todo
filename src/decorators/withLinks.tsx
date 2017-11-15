@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Link } from 'react-router-dom'
 
 // Higher Order Component 
 const withLinks = (WrappedComponent: any) => {
@@ -7,7 +8,13 @@ const withLinks = (WrappedComponent: any) => {
       super(props)
     }
     render() {
-      return <WrappedComponent {...this.props}/>
+      return (
+        <div>
+          <Link to="/"> index </Link>
+          <Link to="/about"> about </Link>
+          <WrappedComponent {...this.props}/>
+        </div>
+      )
     }
   }
 }
