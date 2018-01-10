@@ -1,10 +1,15 @@
 ### Usage
 
-1. `yarn install`
-2. `yarn build` (initiates a watch process)
-3. `yarn start` (initiates a watch process)
-4. localhost:8080
+1. `yarn install`🚀
 
+in 2 different terminal sessions:
+
+1. `yarn build` ☭
+2. `yarn start` 💉
+
+in your browser -> `localhost:8080`
+
+---
 
 ### Documents
 
